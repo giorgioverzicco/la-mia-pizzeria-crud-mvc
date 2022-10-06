@@ -1,0 +1,31 @@
+﻿@{
+    List<string[]> pizza = new()
+    {
+        new [] { "Margherita", "La classica pizza", "margherita.png", "4,00"},
+        new [] { "Diavola", "La classica pizza piccante", "diavola.png", "5,50"},
+        new [] { "Cotto", "La classica pizza con prosciutto cotto", "cotto.png", "5,00"},
+        new [] { "Salsiccia", "La classica pizza con la salsiccia", "salsiccia.png", "6,50"},
+    };
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Nome</th>
+            <th scope="col">Desc.</th>
+            <th scope="col">Foto</th>
+            <th scope="col">Prezzo</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (string[] p in pizza)
+    {
+        <tr>
+            <td>@p[0]</td>
+            <td>@p[1]</td>
+            <td>@p[2]</td>
+            <td>@Convert.ToDecimal(p[3]).ToString("C")</td>
+        </tr>
+    }
+    </tbody>
+</table>

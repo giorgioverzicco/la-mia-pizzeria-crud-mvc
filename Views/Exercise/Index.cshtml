@@ -1,0 +1,52 @@
+@{
+    string firstName = "Giorgio";
+    string lastName = "Verzicco";
+
+    int count = "nel mezzo del cammin di nostra vita".Count(x => x == 'a');
+    
+    List<int> list = Enumerable.Range(1, 90).OrderBy(_ => new Random().Next()).ToList();
+
+    int SumTo(int n)
+    {
+        return Enumerable.Range(1, n).Sum();
+    }
+}
+
+<h2 class="mb-3">
+    @firstName @lastName
+</h2>
+
+<div class="mb-3">
+    <span>@SumTo(10)</span>
+</div>
+
+<div class="mb-3">
+    <span>@count</span>
+</div>
+
+<div class="mb-3">
+    @foreach (var n in list.Where(x => x is >= 20 and <= 70))
+    {
+        <span class="me-1">@n</span>
+    }
+</div>
+
+<div class="mb-3">
+    <span>@DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")</span>
+</div>
+
+<div class="mb-3">
+    <span>@DateTime.Now.Subtract(TimeSpan.FromDays(7)).Date.ToString("yyyy-MM-dd hh:mm:ss")</span>
+</div>
+
+<div class="mb-3">
+    <span>@DateTime.Now.Subtract(TimeSpan.FromDays(7)).Date.ToString("yyyy-MM-dd hh:mm:ss")</span>
+</div>
+
+<div class="mb-3">
+    <span>@DateTime.Now.DayOfWeek</span>
+</div>
+
+<div class="mb-3">
+    <span>@DateTime.Now.AddYears(1).Date.ToString("yyyy-MM-dd hh:mm:ss")</span>
+</div>

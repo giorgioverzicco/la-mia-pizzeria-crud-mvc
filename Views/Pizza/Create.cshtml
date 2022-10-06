@@ -1,0 +1,31 @@
+@model Pizza
+@{
+}
+
+<div class="container py-3">
+  <form class="row g-3" method="POST" asp-action="Create">
+    <div class="col-md-6">
+      <label asp-for="Name" class="form-label">Name</label>
+      <input asp-for="Name" type="text" class="form-control">
+      <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+      <label asp-for="Price" class="form-label">Price</label>
+      <input asp-for="Price" type="number" class="form-control" step=".01" value="0" min="0" max="100">
+      <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+      <label asp-for="Photo" class="form-label">Photo</label>
+      <input asp-for="Photo" type="text" class="form-control">
+      <span asp-validation-for="Photo" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="Description" class="form-label">Description</label>
+        <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="col-12">
+      <button class="btn btn-primary" type="submit">Create</button>
+    </div>
+  </form>
+</div>
