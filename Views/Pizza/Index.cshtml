@@ -22,9 +22,31 @@
               <p class="card-text">@pizza.Description</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <a asp-controller="Pizza" asp-action="Details" asp-route-id="@pizza.Id" type="button" class="btn btn-sm btn-outline-secondary">View</a>
+                  <a asp-controller="Pizza" asp-action="Details" asp-route-id="@pizza.Id" type="button" class="btn btn-sm btn-outline-primary">View</a>
+                  <a asp-controller="Pizza" asp-action="Update" asp-route-id="@pizza.Id" type="button" class="btn btn-sm btn-outline-warning">Edit</a>
+                  <a type="button" data-bs-toggle="modal" data-bs-target="#deleteModal" class="btn btn-sm btn-outline-danger">Delete</a>
                 </div>
                 <small class="text-muted">@pizza.Price.ToString("C", new CultureInfo("it-IT"))</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="deleteModalLabel">Confirm deletion</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                Are you sure you want to delete @pizza.Name?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <form method="POST" asp-action="Delete" asp-route-id="@pizza.Id">
+                  <button class="btn btn-danger" type="submit">Delete</button>
+                </form>
               </div>
             </div>
           </div>
