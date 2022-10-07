@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace la_mia_pizzeria_static.Controllers;
+namespace la_mia_pizzeria_crud_mvc.Controllers;
 
 public class ExerciseController : Controller
 {

@@ -24,7 +24,7 @@
                 <div class="btn-group">
                   <a asp-controller="Pizza" asp-action="Details" asp-route-id="@pizza.Id" type="button" class="btn btn-sm btn-outline-primary">View</a>
                   <a asp-controller="Pizza" asp-action="Update" asp-route-id="@pizza.Id" type="button" class="btn btn-sm btn-outline-warning">Edit</a>
-                  <a type="button" data-bs-toggle="modal" data-bs-target="#deleteModal" class="btn btn-sm btn-outline-danger">Delete</a>
+                  <a type="button" data-bs-toggle="modal" data-bs-target="#deleteModal_@pizza.Id" class="btn btn-sm btn-outline-danger">Delete</a>
                 </div>
                 <small class="text-muted">@pizza.Price.ToString("C", new CultureInfo("it-IT"))</small>
               </div>
@@ -32,7 +32,7 @@
           </div>
         </div>
         
-        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal fade" id="deleteModal_@pizza.Id" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">

@@ -23,7 +23,7 @@ namespace la_mia_pizzeria_post.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("la_mia_pizzeria_static.Models.Pizza", b =>
+            modelBuilder.Entity("la_mia_pizzeria_crud_mvc.Models.Pizza", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

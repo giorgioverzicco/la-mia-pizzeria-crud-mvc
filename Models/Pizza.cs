@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace la_mia_pizzeria_static.Models;
+namespace la_mia_pizzeria_crud_mvc.Models;
 
 public class Pizza
 {
@@ -24,4 +24,7 @@ public class Pizza
     [Column(TypeName = "money")]
     [Range(0, 100, ErrorMessage = "{0} must be between {1:C} and {2:C}.")]
     public decimal Price { get; set; }
+    
+    public int CategoryId { get; set; }
+    public Category? Category { get; set; }
 }

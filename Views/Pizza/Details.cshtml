@@ -16,6 +16,10 @@
             <small class="text-muted">@Model.Price.ToString("C", new CultureInfo("it-IT"))</small>
           </div>
         </div>
+        
+        <div class="card-footer">
+          Categoria: <span class="fw-bold">@Model.Category.Name</span>
+        </div>
       </div>
     </div>
 </div>
