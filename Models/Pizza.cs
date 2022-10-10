@@ -5,6 +5,11 @@ namespace la_mia_pizzeria_crud_mvc.Models;
 
 public class Pizza
 {
+    public Pizza()
+    {
+        Ingredients = new List<Ingredient>();
+    }
+    
     public int Id { get; set; }
     
     [Required(ErrorMessage = "{0} is required.")]
@@ -27,4 +32,6 @@ public class Pizza
     
     public int CategoryId { get; set; }
     public Category? Category { get; set; }
+    
+    public virtual ICollection<Ingredient> Ingredients { get; set; }
 }

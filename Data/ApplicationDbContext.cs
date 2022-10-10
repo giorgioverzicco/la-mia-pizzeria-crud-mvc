@@ -14,4 +14,5 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<Pizza> Pizzas { get; set; } = null!;
     public DbSet<Category> Categories { get; set; } = null!;
+    public DbSet<Ingredient> Ingredients { get; set; } = null!;
 }

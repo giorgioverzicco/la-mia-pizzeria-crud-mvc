@@ -2,9 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace la_mia_pizzeria_crud_mvc.Models;
 
-public class Category
+public class Ingredient
 {
-    public Category()
+    public Ingredient()
     {
         Pizzas = new List<Pizza>();
     }
@@ -13,6 +13,6 @@ public class Category
 
     [Required]
     public string Name { get; set; } = null!;
-
+    
     public virtual ICollection<Pizza> Pizzas { get; set; }
 }
