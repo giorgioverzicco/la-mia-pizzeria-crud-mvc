@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using la_mia_pizzeria_post.Data;
+using la_mia_pizzeria_crud_mvc.Data;
 
 #nullable disable
 
-namespace la_mia_pizzeria_post.Migrations
+namespace la_mia_pizzeria_crud_mvc.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221005115038_Initial")]
+    [Migration("20221010121424_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,23 @@ namespace la_mia_pizzeria_post.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("la_mia_pizzeria_crud_mvc.Models.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("la_mia_pizzeria_crud_mvc.Models.Pizza", b =>
                 {
                     b.Property<int>("Id")
@@ -30,6 +47,9 @@ namespace la_mia_pizzeria_post.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -49,41 +69,25 @@ namespace la_mia_pizzeria_post.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Pizzas");
+                    b.HasIndex("CategoryId");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "La classica pizza",
-                            Name = "Margherita",
-                            Photo = "margherita.png",
-                            Price = 4.00m
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "La classica pizza piccante",
-                            Name = "Diavola",
-                            Photo = "diavola.png",
-                            Price = 5.50m
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "La classica pizza con prosciutto cotto",
-                            Name = "Cotto",
-                            Photo = "cotto.png",
-                            Price = 5.00m
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Description = "La classica pizza con la salsiccia",
-                            Name = "Salsiccia",
-                            Photo = "salsiccia.png",
-                            Price = 6.50m
-                        });
+                    b.ToTable("Pizzas");
+                });
+
+            modelBuilder.Entity("la_mia_pizzeria_crud_mvc.Models.Pizza", b =>
+                {
+                    b.HasOne("la_mia_pizzeria_crud_mvc.Models.Category", "Category")
+                        .WithMany("Pizzas")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("la_mia_pizzeria_crud_mvc.Models.Category", b =>
+                {
+                    b.Navigation("Pizzas");
                 });
 #pragma warning restore 612, 618
         }

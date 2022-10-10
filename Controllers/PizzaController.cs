@@ -1,15 +1,15 @@
-using la_mia_pizzeria_post.Data;
-using la_mia_pizzeria_crud_mvc.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using la_mia_pizzeria_crud_mvc.Data;
+using la_mia_pizzeria_crud_mvc.Models;
 
 namespace la_mia_pizzeria_crud_mvc.Controllers;
 
 public class PizzaController : Controller
 {
     private readonly ApplicationDbContext _ctx;
-
+    
     public PizzaController(ApplicationDbContext ctx)
     {
         _ctx = ctx;
@@ -18,13 +18,21 @@ public class PizzaController : Controller
     // GET
     public IActionResult Index()
     {
-        List<Pizza> pizzas = _ctx.Pizzas.ToList();
+        List<Pizza> pizzas = 
+            _ctx.Pizzas
+                .Include(x => x.Category)
+                .ToList();
         return View(pizzas);
     }
-
-    // GET: Pizza/Details/{id}
-    public IActionResult Details(int id)
+    
+    // GET: Pizza/Details/{id?}
+    public IActionResult Details(int? id)
     {
+        if (id is null or 0)
+        {
+            return NotFound();
+        }
+
         Pizza? pizza = 
             _ctx.Pizzas
                 .Include(x => x.Category)
@@ -32,113 +40,113 @@ public class PizzaController : Controller
 
         if (pizza is null)
         {
-            return View("Error");
+            return NotFound();
         }
-
+        
         return View(pizza);
     }
-
+    
+    // GET: Pizza/Create
     public IActionResult Create()
     {
-        IEnumerable<SelectListItem> categories = 
-            _ctx.Categories
-                .Select(x => new SelectListItem
-                {
-                    Text = x.Name,
-                    Value = x.Id.ToString()
-                });
-        Pizza emptyPizza = new Pizza();
-        CategoryPizzaViewModel categoryPizzaVm = new CategoryPizzaViewModel
+        var pizzaVm = new PizzaViewModel
         {
-            Categories = categories,
-            Pizza = emptyPizza
+            Pizza = new Pizza(), 
+            Categories = _ctx.Categories
+                .Select(x => 
+                    new SelectListItem
+                    {
+                        Value = x.Id.ToString(), 
+                        Text = x.Name
+                    }).ToList()
         };
         
-        return View(categoryPizzaVm);
+        return View(pizzaVm);
     }
-
+    
+    // POST: Pizza/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Create(CategoryPizzaViewModel categoryPizzaVm)
+    public IActionResult Create(PizzaViewModel pizzaVm)
     {
         if (!ModelState.IsValid)
         {
-            return View(categoryPizzaVm);
+            return View(pizzaVm);
         }
 
-        _ctx.Pizzas.Add(categoryPizzaVm.Pizza);
+        _ctx.Pizzas.Add(pizzaVm.Pizza);
         _ctx.SaveChanges();
-
+        
         return RedirectToAction(nameof(Index));
     }
     
-    public IActionResult Update(int id)
+    // GET: Pizza/Edit/{id?}
+    public IActionResult Edit(int? id)
     {
-        Pizza? pizza = _ctx.Pizzas.FirstOrDefault(x => x.Id == id);
-
-        if (pizza is null)
+        if (id is null or 0)
         {
-            return View("Error");
+            return NotFound();
         }
         
-        IEnumerable<SelectListItem> categories = 
-            _ctx.Categories
-                .Select(x => new SelectListItem
-                {
-                    Text = x.Name,
-                    Value = x.Id.ToString()
-                });
-
-        CategoryPizzaViewModel categoryPizzaVm = new CategoryPizzaViewModel
-        {
-            Categories = categories,
-            Pizza = pizza
-        };
-
-        return View(categoryPizzaVm);
-    }
-
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public IActionResult Update(int id, CategoryPizzaViewModel categoryPizzaViewModel)
-    {
-        Pizza? pizza = _ctx.Pizzas.FirstOrDefault(x => x.Id == id);
+        Pizza? pizza = _ctx.Pizzas.Find(id);
 
         if (pizza is null)
         {
             return NotFound();
         }
-
+        
+        var pizzaVm = new PizzaViewModel
+        {
+            Pizza = pizza, 
+            Categories = _ctx.Categories
+                .Select(x => 
+                    new SelectListItem
+                    {
+                        Value = x.Id.ToString(), 
+                        Text = x.Name,
+                        Selected = x.Id == pizza.CategoryId
+                    }).ToList()
+        };
+        
+        return View(pizzaVm);
+    }
+    
+    // POST: Pizza/Edit/{id?}
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Edit(PizzaViewModel pizzaVm)
+    {
         if (!ModelState.IsValid)
         {
-            return View(categoryPizzaViewModel);
+            return View(pizzaVm);
         }
 
-        pizza.Name = categoryPizzaViewModel.Pizza.Name;
-        pizza.Description = categoryPizzaViewModel.Pizza.Description;
-        pizza.Photo = categoryPizzaViewModel.Pizza.Photo;
-        pizza.Price = categoryPizzaViewModel.Pizza.Price;
-        pizza.CategoryId = categoryPizzaViewModel.Pizza.CategoryId;
-        
+        _ctx.Pizzas.Update(pizzaVm.Pizza);
         _ctx.SaveChanges();
         
         return RedirectToAction(nameof(Index));
     }
-
+    
+    // POST: Pizza/Delete/{id?}
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Delete(int id)
+    public IActionResult Delete(int? id)
     {
-        Pizza? pizza = _ctx.Pizzas.FirstOrDefault(x => x.Id == id);
+        if (id is null or 0)
+        {
+            return NotFound();
+        }
+        
+        Pizza? pizza = _ctx.Pizzas.Find(id);
 
         if (pizza is null)
         {
             return NotFound();
         }
-
-        _ctx.Remove(pizza);
+        
+        _ctx.Pizzas.Remove(pizza);
         _ctx.SaveChanges();
-
+        
         return RedirectToAction(nameof(Index));
     }
 }

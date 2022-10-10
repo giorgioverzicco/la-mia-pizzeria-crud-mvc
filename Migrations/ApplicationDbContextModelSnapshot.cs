@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using la_mia_pizzeria_post.Data;
+using la_mia_pizzeria_crud_mvc.Data;
 
 #nullable disable
 
-namespace la_mia_pizzeria_post.Migrations
+namespace la_mia_pizzeria_crud_mvc.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -36,28 +36,6 @@ namespace la_mia_pizzeria_post.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Pizze classiche"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Pizze bianche"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Pizze vegetariane"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Pizze di mare"
-                        });
                 });
 
             modelBuilder.Entity("la_mia_pizzeria_crud_mvc.Models.Pizza", b =>
@@ -92,71 +70,6 @@ namespace la_mia_pizzeria_post.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Pizzas");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CategoryId = 1,
-                            Description = "La classica pizza",
-                            Name = "Margherita",
-                            Photo = "margherita.png",
-                            Price = 4.00m
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CategoryId = 1,
-                            Description = "La classica pizza piccante",
-                            Name = "Diavola",
-                            Photo = "diavola.png",
-                            Price = 5.50m
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CategoryId = 1,
-                            Description = "La classica pizza con prosciutto cotto",
-                            Name = "Cotto",
-                            Photo = "cotto.png",
-                            Price = 5.00m
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CategoryId = 1,
-                            Description = "La classica pizza con la salsiccia",
-                            Name = "Salsiccia",
-                            Photo = "salsiccia.png",
-                            Price = 6.50m
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CategoryId = 3,
-                            Description = "La classica pizza vegetariana",
-                            Name = "Ortolana",
-                            Photo = "ortolana.png",
-                            Price = 6.50m
-                        },
-                        new
-                        {
-                            Id = 6,
-                            CategoryId = 2,
-                            Description = "La classica pizza bianca",
-                            Name = "Marinara",
-                            Photo = "marinara.png",
-                            Price = 5.00m
-                        },
-                        new
-                        {
-                            Id = 7,
-                            CategoryId = 4,
-                            Description = "La classica pizza di mare",
-                            Name = "Salmone e Rucola",
-                            Photo = "salmone_e_rucola.png",
-                            Price = 8.00m
-                        });
                 });
 
             modelBuilder.Entity("la_mia_pizzeria_crud_mvc.Models.Pizza", b =>

@@ -1,19 +1,21 @@
 @model PizzaViewModel
 
 @{
-    ViewData["Title"] = "Create New Pizza";
+    ViewData["Title"] = "Edit a Pizza";
 }
 
 <div class="container py-1">
     <div class="row pb-4">
         <div class="col-md-6">
-            <h2>Create New Pizza</h2>
+            <h2>Edit @Model.Pizza.Name</h2>
         </div>
     </div>
     
-    <form method="POST" asp-controller="Pizza" asp-action="Create" class="card bg-light has-validation">
+    <form method="POST" asp-controller="Pizza" asp-action="Edit" asp-route-id="@Model.Pizza.Id" class="card bg-light has-validation">
         <div class="card-body">
             <div class="row g-3">
+                <input type="hidden" asp-for="Pizza.Id" />
+                
                 <div class="col-12">
                     <label asp-for="Pizza.Category" class="form-label">Category</label>
                     <select asp-for="Pizza.CategoryId" asp-items="Model.Categories" class="form-select">
@@ -21,7 +23,7 @@
                     </select>
                     <span asp-validation-for="Pizza.CategoryId"></span>
                 </div>
-                
+
                 <div class="col-md-6">
                     <label asp-for="Pizza.Name" class="form-label">Name</label>
                     <input asp-for="Pizza.Name" type="text" class="form-control">
@@ -30,7 +32,7 @@
 
                 <div class="col-md-6">
                     <label asp-for="Pizza.Price" class="form-label">Price</label>
-                    <input asp-for="Pizza.Price" type="number" min="0" max="100" value="0" step=".50" class="form-control">
+                    <input asp-for="Pizza.Price" type="number" min="0" max="100" value="@Model.Pizza.Price.ToString("###.##")" step=".50" class="form-control">
                     <span asp-validation-for="Pizza.Price"></span>
                 </div>
 
@@ -48,7 +50,7 @@
 
                 <div class="col-12">
                     <button type="submit" class="btn btn-primary">
-                        Create
+                        Update
                     </button>
                     <a asp-controller="Pizza" asp-action="Index" type="button" class="btn btn-secondary">
                         Back
