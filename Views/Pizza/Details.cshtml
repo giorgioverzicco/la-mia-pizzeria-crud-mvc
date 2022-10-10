@@ -18,6 +18,19 @@
         <p class="card-text">
           @Model.Description
         </p>
+        @if (Model.Ingredients.Any())
+        {
+          <p class="card-text">
+            <span>Ingredients:</span>
+            
+            <ul>
+              @foreach (var ingredient in Model.Ingredients)
+              {
+                <li>@ingredient.Name</li>
+              }
+            </ul>
+          </p>
+        }
         <p class="card-text text-end">
           Price:
           <small class="text-muted">@Model.Price.ToString("C")</small>

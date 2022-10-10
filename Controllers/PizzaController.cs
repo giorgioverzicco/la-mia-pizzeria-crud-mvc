@@ -113,7 +113,10 @@ public class PizzaController : Controller
             return NotFound();
         }
 
-        Pizza? pizza = _ctx.Pizzas.Find(id);
+        Pizza? pizza = 
+            _ctx.Pizzas
+                .Include(x => x.Ingredients)
+                .FirstOrDefault(x => x.Id == id);
 
         if (pizza is null)
         {
@@ -129,7 +132,7 @@ public class PizzaController : Controller
                         Text = x.Name,
                         Selected = x.Id == pizza.CategoryId
                     }).ToList();
-        
+
         var ingredients =
             _ctx.Ingredients
                 .Select(x =>
