@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using la_mia_pizzeria_crud_mvc.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace la_mia_pizzeria_crud_mvc.Data;
 
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext : IdentityDbContext
 {
     public ApplicationDbContext(
         DbContextOptions<ApplicationDbContext> options) 

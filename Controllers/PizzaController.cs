@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using la_mia_pizzeria_crud_mvc.Data;
 using la_mia_pizzeria_crud_mvc.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace la_mia_pizzeria_crud_mvc.Controllers;
 
+[Authorize]
 public class PizzaController : Controller
 {
     private readonly ApplicationDbContext _ctx;
